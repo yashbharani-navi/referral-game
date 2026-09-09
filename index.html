@@ -908,6 +908,9 @@
   const MULTI_HIT_RATIO = 0.15;
   const POWERUP_DROP_CHANCE = 0.12;
   const MEGA_REWARD_TARGET = 500;
+  const BALL_SPEED_WEB = 6;
+  const BALL_SPEED_MOBILE = 12;
+  const MOBILE_BREAKPOINT_PX = 480;
   const STORAGE_TOTAL = 'naviTotalPoints';
   const STORAGE_HIGH = 'naviHighScore';
   const STORAGE_MEGA_PENDING = 'naviMegaRewardPending';
@@ -954,7 +957,7 @@
   let bricks = [];
   let powerUps = [];
   let particles = [];
-  let baseBallSpeed = 6;
+  let baseBallSpeed = BALL_SPEED_WEB;
   let fastBallMultiplier = 1;
   let animationId = null;
   let canvasW = 0;
@@ -969,9 +972,18 @@
     return { paddleY };
   }
 
+  function isMobileView() {
+    return window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT_PX}px)`).matches;
+  }
+
+  function syncBaseBallSpeed() {
+    baseBallSpeed = isMobileView() ? BALL_SPEED_MOBILE : BALL_SPEED_WEB;
+  }
+
   function resizeCanvas() {
     const container = document.getElementById('playfield');
     const rect = container.getBoundingClientRect();
+    syncBaseBallSpeed();
     dpr = window.devicePixelRatio || 1;
     canvasW = rect.width;
     canvasH = rect.height;
