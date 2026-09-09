@@ -794,7 +794,7 @@
                 <p class="modal-subtitle">Out of lives</p>
                 <p id="gameover-message">You won <span class="point-inline"><svg class="point-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5L19.5 9.5L12 21.5L4.5 9.5L12 2.5Z" fill="#2B7FD9"/><path d="M12 2.5L19.5 9.5H4.5L12 2.5Z" fill="#7BC4FF"/><path d="M4.5 9.5H19.5L12 21.5L4.5 9.5Z" fill="#4DA3FF"/></svg><span id="gameover-score">0</span></span> points</p>
                 <div class="progress-wrap">
-                  <div class="progress-label" id="progress-label">You need 500 points to win the mega reward (0 / 500)</div>
+                  <div class="progress-label" id="progress-label">Mega reward progress (0/500)</div>
                   <div class="progress-row">
                     <div class="progress-bar">
                       <div class="progress-fill" id="progress-fill" style="width:0%"></div>
@@ -907,8 +907,8 @@
   const MULTI_HIT_RATIO = 0.15;
   const POWERUP_DROP_CHANCE = 0.12;
   const MEGA_REWARD_TARGET = 500;
-  const BALL_SPEED_WEB = 6;
-  const BALL_SPEED_MOBILE = 20;
+  const BALL_SPEED_WEB = 5;
+  const BALL_SPEED_MOBILE = 15;
   const MOBILE_BREAKPOINT_PX = 480;
   const STORAGE_TOTAL = 'naviTotalPoints';
   const STORAGE_HIGH = 'naviHighScore';
@@ -1036,7 +1036,7 @@
     const remaining = Math.max(0, MEGA_REWARD_TARGET - totalPoints);
     progressLabel.textContent = remaining === 0
       ? 'Mega reward unlocked!'
-      : `You need ${remaining} points to win the mega reward (${totalPoints} / ${MEGA_REWARD_TARGET})`;
+      : `Mega reward progress (${totalPoints}/${MEGA_REWARD_TARGET})`;
   }
 
   /** Add session score to cumulative progress; returns true if mega reward reached */
