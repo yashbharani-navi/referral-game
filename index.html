@@ -300,6 +300,12 @@
       height: 0.85em;
     }
 
+    .hud-score-denom {
+      font-size: 14px;
+      font-weight: 600;
+      opacity: 0.5;
+    }
+
     .point-inline {
       display: inline-flex;
       align-items: center;
@@ -443,14 +449,25 @@
     }
 
     .intro-hero h2 {
-      font-size: 26px;
-      font-weight: 700;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-size: 20px;
+      font-weight: 600;
       line-height: 1.35;
       color: var(--navi-text);
     }
 
     .intro-hero .prize-amount {
       color: var(--navi-green);
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    .intro-hero .prize-amount .coin-icon {
+      width: 32px;
+      height: 32px;
     }
 
     .intro-subtext {
@@ -469,6 +486,38 @@
 
     .entry-progress {
       margin-top: 16px;
+    }
+
+    .entry-progress-subtext {
+      font-size: 12px;
+      color: var(--navi-text-subtle);
+      margin-bottom: 8px;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .entry-progress-row,
+    .progress-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .entry-progress-row .progress-bar,
+    .progress-row .progress-bar {
+      flex: 1;
+    }
+
+    .entry-progress-row .progress-bar {
+      height: 4px;
+    }
+
+    .entry-gift-icon,
+    .progress-gift-icon {
+      width: 31px;
+      height: 24px;
+      flex-shrink: 0;
+      object-fit: contain;
     }
 
     /* Progress bar (game over) */
@@ -566,8 +615,19 @@
 
     /* Mega reward */
     .mega-reward-icon {
-      font-size: 48px;
       margin: 12px 0;
+    }
+
+    .mega-reward-icon img {
+      width: 62px;
+      height: 48px;
+      object-fit: contain;
+    }
+
+    .mega-reward-amount .point-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
     }
 
     .mega-reward-amount {
@@ -656,17 +716,21 @@
           </div>
           <div class="intro-hero">
             <h2>
-              Break brick and win up to
+              <span>Break all bricks to win up to</span>
               <span class="prize-amount coin-inline">
-                <img src="navi-coin.svg" alt="" class="coin-icon" width="24" height="24">
-                <span>10,000</span>
+                <img src="navi-coin.svg" alt="" class="coin-icon" width="32" height="32">
+                <span>1,000</span>
               </span>
             </h2>
           </div>
           <button type="button" class="btn btn-primary" id="btn-start-game">Start Game</button>
           <div class="entry-progress" aria-hidden="true">
-            <div class="progress-bar">
-              <div class="progress-fill" id="entry-progress-fill" style="width:0%"></div>
+            <p class="entry-progress-subtext">And win a mega reward by collecting 500 points</p>
+            <div class="entry-progress-row">
+              <div class="progress-bar">
+                <div class="progress-fill" id="entry-progress-fill" style="width:0%"></div>
+              </div>
+              <img src="Gift Box.png" alt="" class="entry-gift-icon" width="31" height="24">
             </div>
           </div>
         </div>
@@ -686,14 +750,14 @@
             <div id="hud">
               <div class="hud-stats">
                 <div class="hud-item">
-                  <div class="hud-label">Score</div>
+                  <div class="hud-label">Points collected</div>
                   <div class="hud-value">
                     <svg class="point-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
                       <path d="M12 2.5L19.5 9.5L12 21.5L4.5 9.5L12 2.5Z" fill="#2B7FD9"/>
                       <path d="M12 2.5L19.5 9.5H4.5L12 2.5Z" fill="#7BC4FF"/>
                       <path d="M4.5 9.5H19.5L12 21.5L4.5 9.5Z" fill="#4DA3FF"/>
                     </svg>
-                    <span id="hud-score">0</span><span style="font-size:14px;opacity:0.5"> / 100</span>
+                    <span id="hud-score">0</span><span class="hud-score-denom"> / 500</span>
                   </div>
                 </div>
                 <div class="hud-item">
@@ -731,8 +795,11 @@
                 <p id="gameover-message">You won <span class="point-inline"><svg class="point-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5L19.5 9.5L12 21.5L4.5 9.5L12 2.5Z" fill="#2B7FD9"/><path d="M12 2.5L19.5 9.5H4.5L12 2.5Z" fill="#7BC4FF"/><path d="M4.5 9.5H19.5L12 21.5L4.5 9.5Z" fill="#4DA3FF"/></svg><span id="gameover-score">0</span></span> points</p>
                 <div class="progress-wrap">
                   <div class="progress-label">Mega reward progress</div>
-                  <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+                  <div class="progress-row">
+                    <div class="progress-bar">
+                      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+                    </div>
+                    <img src="Gift Box.png" alt="" class="progress-gift-icon" width="31" height="24">
                   </div>
                   <div class="progress-meta" id="progress-meta">You need 500 points to win the mega reward</div>
                 </div>
@@ -743,9 +810,15 @@
             <div id="modal-mega-reward" class="modal-overlay">
               <div class="modal-card">
                 <h2>Mega Reward Unlocked!</h2>
-                <div class="mega-reward-icon">🏆</div>
+                <div class="mega-reward-icon">
+                  <img src="Gift Box.png" alt="" width="62" height="48">
+                </div>
                 <p class="mega-reward-amount">
-                  <img src="navi-coin.svg" alt="" class="coin-icon" width="24" height="24">
+                  <svg class="point-icon" width="28" height="28" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 2.5L19.5 9.5L12 21.5L4.5 9.5L12 2.5Z" fill="#2B7FD9"/>
+                    <path d="M12 2.5L19.5 9.5H4.5L12 2.5Z" fill="#7BC4FF"/>
+                    <path d="M4.5 9.5H19.5L12 21.5L4.5 9.5Z" fill="#4DA3FF"/>
+                  </svg>
                   <span>500 points!</span>
                 </p>
                 <p>Mega reward earned — keep playing to win more.</p>
@@ -837,6 +910,7 @@
   const MEGA_REWARD_TARGET = 500;
   const STORAGE_TOTAL = 'naviTotalPoints';
   const STORAGE_HIGH = 'naviHighScore';
+  const STORAGE_MEGA_PENDING = 'naviMegaRewardPending';
 
   const LAYOUTS = [
     {
@@ -923,13 +997,20 @@
      PERSISTENCE & PROGRESS
      ═══════════════════════════════════════════════════════════════ */
   function loadProgress() {
-    totalPoints = parseInt(localStorage.getItem(STORAGE_TOTAL) || '0', 10);
+    totalPoints = Math.min(
+      MEGA_REWARD_TARGET,
+      parseInt(localStorage.getItem(STORAGE_TOTAL) || '0', 10)
+    );
     highScore = parseInt(localStorage.getItem(STORAGE_HIGH) || '0', 10);
+    pendingMegaReward =
+      localStorage.getItem(STORAGE_MEGA_PENDING) === '1' ||
+      totalPoints >= MEGA_REWARD_TARGET;
   }
 
   function saveProgress() {
     localStorage.setItem(STORAGE_TOTAL, String(totalPoints));
     localStorage.setItem(STORAGE_HIGH, String(highScore));
+    localStorage.setItem(STORAGE_MEGA_PENDING, pendingMegaReward ? '1' : '0');
   }
 
   function updateEntryUI() {
@@ -953,10 +1034,35 @@
     score = sessionScore;
     totalPoints = Math.min(MEGA_REWARD_TARGET, totalPoints + sessionScore);
     if (sessionScore > highScore) highScore = sessionScore;
+    if (totalPoints >= MEGA_REWARD_TARGET) pendingMegaReward = true;
     saveProgress();
     updateEntryUI();
     updateProgressUI();
-    return totalPoints >= MEGA_REWARD_TARGET;
+    return pendingMegaReward;
+  }
+
+  function resetPointsProgress() {
+    totalPoints = 0;
+    score = 0;
+    pendingMegaReward = false;
+    saveProgress();
+    updateEntryUI();
+    updateProgressUI();
+    updateHUD();
+  }
+
+  function presentMegaReward() {
+    gameState = STATE.ENDED;
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
+    }
+    hideAllModals();
+    celebrationEl.classList.remove('active');
+    celebrationEl.innerHTML = '';
+    resetPointsProgress();
+    triggerCelebration();
+    modalMegaReward.classList.add('visible');
   }
 
   /* ═══════════════════════════════════════════════════════════════
@@ -1206,8 +1312,13 @@
      ═══════════════════════════════════════════════════════════════ */
   const HEART_ICON_HTML = '<svg class="life-icon" width="20" height="20" viewBox="0 0 24 24" fill="#ff4466" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
 
+  function getOverallCollectedPoints() {
+    const pending = gameState === STATE.PLAYING ? score : 0;
+    return Math.min(MEGA_REWARD_TARGET, totalPoints + pending);
+  }
+
   function updateHUD() {
-    hudScore.textContent = score;
+    hudScore.textContent = getOverallCollectedPoints();
     hudLives.innerHTML = lives > 0 ? HEART_ICON_HTML : '';
   }
 
@@ -1229,6 +1340,13 @@
      GAME INITIALIZATION & RESET
      ═══════════════════════════════════════════════════════════════ */
   function initGame(resetLives) {
+    if (totalPoints >= MEGA_REWARD_TARGET || pendingMegaReward) {
+      pendingMegaReward = true;
+      saveProgress();
+      presentMegaReward();
+      return;
+    }
+
     if (resetLives) lives = 1;
 
     score = 0;
@@ -1255,7 +1373,6 @@
 
   function newSessionAfterInvite() {
     hideAllModals();
-    pendingMegaReward = false;
     lives = 1;
     initGame(false);
   }
@@ -1300,7 +1417,7 @@
     celebrationEl.classList.remove('active');
     celebrationEl.innerHTML = '';
     if (pendingMegaReward) {
-      showMegaReward();
+      presentMegaReward();
     } else {
       goToReferral();
     }
@@ -1316,14 +1433,11 @@
   }
 
   function showMegaReward() {
-    triggerCelebration();
-    modalMegaReward.classList.add('visible');
+    presentMegaReward();
   }
 
   function claimMegaReward() {
-    totalPoints = 0;
     pendingMegaReward = false;
-    saveProgress();
     hideAllModals();
     celebrationEl.classList.remove('active');
     celebrationEl.innerHTML = '';
@@ -1333,7 +1447,7 @@
   function handleInviteClick() {
     if (pendingMegaReward) {
       hideAllModals();
-      showMegaReward();
+      presentMegaReward();
       return;
     }
     newSessionAfterInvite();
