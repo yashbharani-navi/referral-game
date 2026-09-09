@@ -794,14 +794,13 @@
                 <p class="modal-subtitle">Out of lives</p>
                 <p id="gameover-message">You won <span class="point-inline"><svg class="point-icon" width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5L19.5 9.5L12 21.5L4.5 9.5L12 2.5Z" fill="#2B7FD9"/><path d="M12 2.5L19.5 9.5H4.5L12 2.5Z" fill="#7BC4FF"/><path d="M4.5 9.5H19.5L12 21.5L4.5 9.5Z" fill="#4DA3FF"/></svg><span id="gameover-score">0</span></span> points</p>
                 <div class="progress-wrap">
-                  <div class="progress-label">Mega reward progress</div>
+                  <div class="progress-label" id="progress-label">You need 500 points to win the mega reward (0 / 500)</div>
                   <div class="progress-row">
                     <div class="progress-bar">
                       <div class="progress-fill" id="progress-fill" style="width:0%"></div>
                     </div>
                     <img src="Gift Box.png" alt="" class="progress-gift-icon" width="31" height="24">
                   </div>
-                  <div class="progress-meta" id="progress-meta">You need 500 points to win the mega reward</div>
                 </div>
                 <button class="btn btn-primary" id="btn-invite" style="margin-top:20px">Invite a friend to play again</button>
               </div>
@@ -863,7 +862,7 @@
   const gameoverMessage = document.getElementById('gameover-message');
   const gameoverScore = document.getElementById('gameover-score');
   const progressFill = document.getElementById('progress-fill');
-  const progressMeta = document.getElementById('progress-meta');
+  const progressLabel = document.getElementById('progress-label');
   const scratchCard = document.getElementById('scratch-card');
   const scratchCover = document.getElementById('scratch-cover');
   const scratchReveal = document.getElementById('scratch-reveal');
@@ -909,7 +908,7 @@
   const POWERUP_DROP_CHANCE = 0.12;
   const MEGA_REWARD_TARGET = 500;
   const BALL_SPEED_WEB = 6;
-  const BALL_SPEED_MOBILE = 12;
+  const BALL_SPEED_MOBILE = 20;
   const MOBILE_BREAKPOINT_PX = 480;
   const STORAGE_TOTAL = 'naviTotalPoints';
   const STORAGE_HIGH = 'naviHighScore';
@@ -1035,7 +1034,7 @@
     const pct = Math.min(100, (totalPoints / MEGA_REWARD_TARGET) * 100);
     progressFill.style.width = pct + '%';
     const remaining = Math.max(0, MEGA_REWARD_TARGET - totalPoints);
-    progressMeta.textContent = remaining === 0
+    progressLabel.textContent = remaining === 0
       ? 'Mega reward unlocked!'
       : `You need ${remaining} points to win the mega reward (${totalPoints} / ${MEGA_REWARD_TARGET})`;
   }
